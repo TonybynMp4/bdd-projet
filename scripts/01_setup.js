@@ -1,7 +1,7 @@
 // Section 1 : création des collections et jeu de données
 // Les _id sont fixés pour pouvoir les réutiliser dans les sections suivantes :
 //   auteurs      aaaaaaaaaaaaaaaaaaaaaa01 ... a10
-//   livres       bbbbbbbbbbbbbbbbbbbbbb01 ... b20
+//   livres       bbbbbbbbbbbbbbbbbbbbbb01 ... b22
 //   utilisateurs cccccccccccccccccccccc01 ... c12
 //   emprunts     dddddddddddddddddddddd01 ... d24
 
@@ -54,6 +54,8 @@ db.livres.insertMany([
   { _id: B(18), titre: "Contes populaires anonymes", auteur_id: null, annee_publication: 1984, genre: "Conte", nombre_pages: 210, langue: "Français", editeur: "L'École des loisirs", disponible: true, note_moyenne: 3.5, date_ajout: D("2024-06-30"), tags: ["Jeunesse", "Tradition"] },
   { _id: B(19), titre: "Le Cerveau vert", auteur_id: A(9), annee_publication: 1966, genre: "Science-Fiction", nombre_pages: 192, langue: "Français", editeur: "Pocket", disponible: true, note_moyenne: 1.8, date_ajout: D("2024-08-05"), tags: ["Espace"] },
   { _id: B(20), titre: "Harry Potter et le Prisonnier d'Azkaban", auteur_id: A(3), annee_publication: 1999, genre: "Fantasy", nombre_pages: 448, langue: "Français", editeur: "Gallimard Jeunesse", disponible: false, note_moyenne: 4.8, date_ajout: D("2025-01-20"), tags: ["Jeunesse", "Magie", "Aventure"] },
+  { _id: B(21), titre: "Les Dieux eux-mêmes", auteur_id: A(4), annee_publication: 1972, genre: "Science-Fiction", nombre_pages: 320, langue: "Français", editeur: "Folio SF", disponible: true, note_moyenne: 4.4, date_ajout: D("2025-06-03"), tags: ["Espace", "Univers parallèle"] },
+  { _id: B(22), titre: "Le Messie de Dune", auteur_id: A(9), annee_publication: 1969, genre: "Science-Fiction", nombre_pages: 288, langue: "Français", editeur: "Pocket", disponible: true, note_moyenne: 4.1, date_ajout: D("2025-06-03"), tags: ["Espace", "Suite"] },
 ]);
 
 db.utilisateurs.insertMany([
