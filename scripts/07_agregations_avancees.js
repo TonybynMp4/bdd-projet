@@ -11,7 +11,9 @@ const show = (label, res) => {
 const nonAnnule = { $match: { statut: { $ne: "annule" } } };
 const dureeRetour = { $toInt: { $dateDiff: { startDate: "$date_emprunt", endDate: "$date_retour_reelle", unit: "day" } } };
 const dureeJusquaMaintenant = {
-  $dateDiff: { startDate: "$date_emprunt", endDate: { $ifNull: ["$date_retour_reelle", "$$NOW"] }, unit: "day" },
+  $toInt: {
+    $dateDiff: { startDate: "$date_emprunt", endDate: { $ifNull: ["$date_retour_reelle", "$$NOW"] }, unit: "day" },
+  },
 };
 const joinLivre = [
   { $lookup: { from: "livres", localField: "livre_id", foreignField: "_id", as: "livre" } },
