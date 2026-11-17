@@ -1,6 +1,8 @@
 -- 1. Création de la table voiture
 -- (les DROP permettent de relancer tous les fichiers depuis le début)
 
+SET NAMES utf8mb4;
+
 DROP TABLE IF EXISTS location;
 DROP TABLE IF EXISTS client;
 DROP TABLE IF EXISTS voiture;
