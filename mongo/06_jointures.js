@@ -67,22 +67,21 @@ db.utilisateurs.aggregate([
   { $sort: { total_emprunts: -1, nom: 1 } }
 ])
 
-// 6.8 Nombre total d'emprunts par livre
-db.emprunts.aggregate([
-  { $group: { _id: "$livre_id", total_emprunts: { $sum: 1 } } },
-  { $lookup: { from: "livres", localField: "_id", foreignField: "_id", as: "livre" } },
-  { $unwind: "$livre" },
-  { $project: { _id: 0, titre: "$livre.titre", total_emprunts: 1 } },
+// 6.8 Nombre total d'emprunts par livre (livres jamais empruntés compris)
+db.livres.aggregate([
+  { $lookup: { from: "emprunts", localField: "_id", foreignField: "livre_id", as: "emprunts" } },
+  { $project: { _id: 0, titre: 1, total_emprunts: { $size: "$emprunts" } } },
   { $sort: { total_emprunts: -1, titre: 1 } }
 ])
 
-// 6.9 Nombre total d'emprunts des livres de chaque auteur
+// 6.9 Nombre total d'emprunts des livres de chaque auteur (auteurs sans livre compris)
 db.auteurs.aggregate([
-  { $lookup: { from: "livres", localField: "_id", foreignField: "auteur_id", as: "livres" } },
-  { $unwind: "$livres" },
-  { $lookup: { from: "emprunts", localField: "livres._id", foreignField: "livre_id", as: "emprunts" } },
-  { $group: { _id: "$nom", total_emprunts: { $sum: { $size: "$emprunts" } } } },
-  { $sort: { total_emprunts: -1, _id: 1 } }
+  { $lookup: {
+      from: "livres", localField: "_id", foreignField: "auteur_id", as: "livres",
+      pipeline: [{ $lookup: { from: "emprunts", localField: "_id", foreignField: "livre_id", as: "emprunts" } }]
+  } },
+  { $project: { _id: 0, nom: 1, nombre_livres: { $size: "$livres" }, total_emprunts: { $sum: { $map: { input: "$livres", in: { $size: "$$this.emprunts" } } } } } },
+  { $sort: { total_emprunts: -1, nom: 1 } }
 ])
 
 // 6.10 Par genre : nombre de livres et note moyenne
