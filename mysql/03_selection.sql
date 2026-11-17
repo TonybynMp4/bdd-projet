@@ -33,11 +33,12 @@ WHERE couleur = 'Bleu' AND prix_achat > 10000;
 SELECT id, marque, modele, prix_achat, prix_location_jour FROM voiture
 WHERE prix_achat > 30000 AND prix_location_jour > 500;
 
--- 3.8 Voitures dont le rapport prix d'achat / prix de location dépasse 50
+-- 3.8 Voitures dont le rapport prix d'achat / prix de location dépasse un seuil
+-- Avec le seuil 50 de l'énoncé, toutes les voitures passent (le plus petit rapport est 200) : on prend 450 pour que le filtre se voie.
 SELECT id, marque, modele, prix_achat, prix_location_jour,
        ROUND(prix_achat / prix_location_jour, 1) AS rapport
 FROM voiture
-WHERE prix_achat / prix_location_jour > 50
+WHERE prix_achat / prix_location_jour > 450
 ORDER BY rapport DESC;
 
 -- 3.9 Voitures dont l'année est impaire
@@ -55,8 +56,7 @@ WHERE disponibilite = 1 AND kilometrage < 100000
 ORDER BY marque;
 
 -- 3.12 Voitures apparaissant au moins une fois dans location
--- La table location n'existe qu'à partir de la section 6 :
--- cette requête est exécutée à la fin de 06_relations_contraintes.sql.
+-- La table location n'existe qu'à partir de la section 6 : la requête et sa capture sont à la fin de la section 6.3, juste avant les tests des contraintes.
 
 -- 3.13 Les 10 voitures ajoutées le plus récemment (id auto-incrémenté = ordre d'ajout)
 SELECT id, marque, modele, annee FROM voiture
