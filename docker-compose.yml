@@ -1,0 +1,41 @@
+services:
+  mongo:
+    image: mongo:7.0
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: efrei
+      MONGO_INITDB_ROOT_PASSWORD: efrei
+      MONGO_INITDB_DATABASE: bibliotheque
+    ports:
+      - "${MONGO_PORT:-27017}:27017"
+    volumes:
+      - mongo-data:/data/db
+      - ./mongo:/mongo:ro
+      # Jeu de données chargé au premier démarrage
+      - ./mongo/01_setup.js:/docker-entrypoint-initdb.d/01_setup.js:ro
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      retries: 20
+
+  mysql:
+    image: mysql:8.4
+    # Autorise la création de triggers par un utilisateur non SUPER (section 6)
+    command: --log-bin-trust-function-creators=1
+    environment:
+      MYSQL_ROOT_PASSWORD: efrei
+      MYSQL_DATABASE: location_voitures
+      MYSQL_USER: efrei
+      MYSQL_PASSWORD: efrei
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql:/mysql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-uefrei", "-pefrei"]
+      interval: 5s
+      retries: 20
+
+volumes:
+  mongo-data:
+  mysql-data:
