@@ -11,7 +11,7 @@ services:
       - mongo-data:/data/db
       - ./mongo:/mongo:ro
       # Jeu de données chargé au premier démarrage
-      - ./mongo/01_setup.js:/docker-entrypoint-initdb.d/01_setup.js:ro
+      - ./mongo/01.js:/docker-entrypoint-initdb.d/01.js:ro
     healthcheck:
       test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
       interval: 5s
