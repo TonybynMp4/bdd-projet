@@ -26,10 +26,10 @@ docker compose exec mongo mongosh -u efrei -p efrei --authenticationDatabase adm
 
 ## MySQL
 
-Les fichiers s'exécutent dans l'ordre, chaque section partant de l'état laissé par la précédente :
+Les fichiers s'exécutent dans l'ordre, chaque section partant de l'état laissé par la précédente. `-vvt` affiche chaque requête suivie de son résultat :
 
 ```sh
 for f in mysql/*.sql; do
-  docker compose exec -T mysql mysql -t --default-character-set=utf8mb4 -uefrei -pefrei location_voitures < "$f"
+  docker compose exec -T mysql mysql -vvt --default-character-set=utf8mb4 -uefrei -pefrei location_voitures < "$f"
 done
 ```
