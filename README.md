@@ -18,11 +18,17 @@ Le jeu de données Mongo est chargé au premier démarrage. `docker compose down
 
 ## MongoDB
 
+Les fichiers 02 à 09 sont des requêtes mongosh directes : on peut les coller dans `mongosh` ou les envoyer en entrée standard, chaque résultat s'affiche.
+
 ```sh
-docker compose exec mongo mongosh -u efrei -p efrei --authenticationDatabase admin bibliotheque --file /mongo/02_selection.js
+docker compose exec -T mongo mongosh --quiet -u efrei -p efrei --authenticationDatabase admin bibliotheque < mongo/02_selection.js
 ```
 
-`01_setup.js` vide la base et recharge le jeu de données : à relancer avant une section si une section précédente a modifié les données.
+`01_setup.js` est un script qui vide la base et recharge le jeu de données. À relancer avant une section si une section précédente a modifié les données :
+
+```sh
+docker compose exec mongo mongosh -u efrei -p efrei --authenticationDatabase admin bibliotheque --file /mongo/01_setup.js
+```
 
 ## MySQL
 
