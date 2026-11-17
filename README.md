@@ -26,7 +26,7 @@ docker compose exec mongo mongosh -u efrei -p efrei --authenticationDatabase adm
 
 ## MySQL
 
-Les fichiers s'exécutent dans l'ordre, chaque section partant de l'état laissé par la précédente. `-vvt` affiche chaque requête suivie de son résultat, `--force` laisse `06b_tests_contraintes.sql` continuer après chaque refus attendu :
+Les fichiers s'exécutent dans l'ordre, chaque section partant de l'état laissé par la précédente. `-vvt` affiche chaque requête suivie de son résultat, `--force` laisse `06_relations_contraintes_tests.sql` continuer après chaque refus attendu :
 
 ```sh
 for f in mysql/*.sql; do
